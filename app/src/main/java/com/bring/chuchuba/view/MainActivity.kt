@@ -1,8 +1,11 @@
-package com.bring.chuchuba
+package com.bring.chuchuba.view
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.bring.chuchuba.*
+import com.bring.chuchuba.NetworkManager.retrofit
+import com.bring.chuchuba.model.Member
 import com.google.firebase.auth.FirebaseAuth
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -13,13 +16,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
-    private val TAG = this.javaClass.simpleName
+    private val TAG = "로그 ${this.javaClass.simpleName}"
 
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var retrofit : Retrofit
-    private lateinit var service : MemberService
-
-    private val BASE_URL = "http://ec2-13-209-157-42.ap-northeast-2.compute.amazonaws.com:8080/"
+    private val service: MemberService by lazy {
+        retrofit.create(MemberService::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,25 +29,11 @@ class MainActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-        val httpClient = OkHttpClient.Builder()
-                .connectTimeout(1, TimeUnit.MINUTES)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(15, TimeUnit.SECONDS)
-                .addInterceptor(RetrofitInterceptor())
-                .build()
-
-        retrofit = Retrofit.Builder()
-                        .baseUrl(BASE_URL)
-                        .client(httpClient)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build()
-
-        service = retrofit.create(MemberService::class.java)
     }
 
     override fun onStart() {
         super.onStart()
-        if(firebaseAuth.currentUser != null){
+        if (firebaseAuth.currentUser != null) {
             getMemberId()
         } else {
             signInAnonymously()
@@ -53,31 +41,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun signInAnonymously() {
-        Log.e(TAG, "signInAnonymously")
+        Log.d(TAG, "signInAnonymously")
+
         firebaseAuth.signInAnonymously()
-                .addOnCompleteListener(this){ task ->
-                    if (task.isSuccessful) {
-                        Log.e(TAG, "signInAnonymously:success")
-                        getMemberId()
-                    } else {
-                        Log.e(TAG, "signInAnonymously:failure", task.exception)
-                        this@MainActivity.showToast("SignInAnonymously failed")
-                    }
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "signInAnonymously:success")
+                    getMemberId()
+                } else {
+                    Log.e(TAG, "signInAnonymously:failure", task.exception)
+                    this@MainActivity.showToast("SignInAnonymously failed")
                 }
+            }
     }
 
-    private fun getMemberId(){
-        Log.e(TAG, "getMemberId")
-        service.getMyInfo().enqueue(object : Callback<Member.MemberGetResult>{
+    private fun getMemberId() {
+        Log.d(TAG, "getMemberId")
+
+        service.getMyInfo().enqueue(object : Callback<Member.MemberGetResult> {
             override fun onResponse(call: Call<Member.MemberGetResult>, response: Response<Member.MemberGetResult>) {
-                if(response.isSuccessful){
-                    Log.e(TAG, "response is successful")
+                if (response.isSuccessful) {
+                    Log.d(TAG, "response is successful\nMember uid : ${response.body()!!.uid}")
                     this@MainActivity.showToast("Member uid : ${response.body()!!.uid}")
                 } else {
                     Log.e(TAG, "response is not successful")
                     this@MainActivity.showToast("registerWithToken response failed : ${response.code()}")
                 }
             }
+
             override fun onFailure(call: Call<Member.MemberGetResult>, t: Throwable) {
                 Log.e(TAG, "response failed : ", t)
                 this@MainActivity.showToast("registerWithToken response failed")

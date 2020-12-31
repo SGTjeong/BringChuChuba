@@ -1,9 +1,8 @@
 package com.bring.chuchuba
 
+import com.bring.chuchuba.model.Member
 import retrofit2.Call
-import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.POST
 
 interface MemberService {
     @GET("/member")
