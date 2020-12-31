@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "414653842652",
+    "project_id": "fir-springboot-4225d",
+    "storage_bucket": "fir-springboot-4225d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414653842652:android:a66b95b63556311555e019",
+        "android_client_info": {
+          "package_name": "com.bring.chuchuba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414653842652-6m1tgvvv0dr3u0ji8fa2km3t69fhne5b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bring.chuchuba",
+            "certificate_hash": "b699a9d5a28c4a67f2e26c06050c9f858b010085"
+          }
+        },
+        {
+          "client_id": "414653842652-tdcu5d2nnnqq46mkklbi3vteb815vm0r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyGZNv27Q9V7AMFukCsnP_Z39LIt8GZGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414653842652-tdcu5d2nnnqq46mkklbi3vteb815vm0r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
