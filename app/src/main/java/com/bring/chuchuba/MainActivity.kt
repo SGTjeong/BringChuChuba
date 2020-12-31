@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var retrofit : Retrofit
     private lateinit var service : MemberService
 
-    private val BASE_URL = "BASE_URL"
+    private val BASE_URL = "http://ec2-13-209-157-42.ap-northeast-2.compute.amazonaws.com:8080/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
