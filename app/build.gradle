@@ -53,6 +53,15 @@ dependencies {
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+    def lifecycle_version = "2.2.0"
+    // 뷰모델 - 라이프사이클 관련
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    // 라이브 데이터 - 옵저버 패턴
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 }
 
 dependencies {

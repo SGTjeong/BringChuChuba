@@ -3,29 +3,34 @@ package com.bring.chuchuba.view
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.bring.chuchuba.*
 import com.bring.chuchuba.NetworkManager.retrofit
+import com.bring.chuchuba.databinding.ActivityMainBinding
 import com.bring.chuchuba.model.Member
+import com.bring.chuchuba.viewmodel.MainViewModel
 import com.google.firebase.auth.FirebaseAuth
-import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "로그 ${this.javaClass.simpleName}"
 
+    private lateinit var binding : ActivityMainBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private val service: MemberService by lazy {
         retrofit.create(MemberService::class.java)
     }
+    private lateinit var mainViewModel : MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.lifecycleOwner = this
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        binding.vm = mainViewModel
 
         firebaseAuth = FirebaseAuth.getInstance()
 

@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit
 /**
  * 서버 연결 관리
  */
-
 internal object NetworkManager {
     private val BASE_URL = "http://ec2-13-209-157-42.ap-northeast-2.compute.amazonaws.com:8080/"
 
