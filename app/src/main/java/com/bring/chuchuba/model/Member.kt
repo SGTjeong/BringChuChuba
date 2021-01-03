@@ -4,6 +4,7 @@ data class Member(
     val uid : Long
 ){
     data class MemberGetResult(
-        val uid : Long
-    )
+        val uid : Long,
+        val familyId : Long
+        )
 }

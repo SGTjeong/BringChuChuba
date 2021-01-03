@@ -6,6 +6,5 @@ import retrofit2.http.GET
 
 interface MemberService {
     @GET("/member")
-    fun getMyInfo() : Call<Member.MemberGetResult>
-
+    suspend fun getMyInfo() : Member.MemberGetResult
 }
