@@ -23,7 +23,13 @@ class HomeViewModel(
         }
     }
 
+    /**
+     *  When viewModel is notified a HomeEvent.OnStart, this function will be called.
+     * */
     private fun onStart() = launch {
+        /**
+         *  Data change in _myInfo will be observed in MainActivity
+         * */
         _myInfo.postValue(
             memberService.getMyInfo()
         )

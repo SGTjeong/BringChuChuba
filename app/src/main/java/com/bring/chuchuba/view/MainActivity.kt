@@ -47,6 +47,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModels(){
+        /**
+         *  MainActivity is observing myInfo in ViewModel.
+         *  Observer{} will be called every time the data in myInfo changes.
+         * */
         homeViewModel.myInfo.observe(
             this,
             Observer { member ->
