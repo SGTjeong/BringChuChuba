@@ -1,4 +1,4 @@
-package com.bring.chuchuba.view.home.buildlogic
+package com.bring.chuchuba.viewmodel.home.buildlogic
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
