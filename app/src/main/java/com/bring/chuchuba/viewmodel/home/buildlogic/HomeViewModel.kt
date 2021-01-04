@@ -36,7 +36,6 @@ class HomeViewModel(
 
     fun createMission() = launch {
         Log.d(TAG, "HomeViewModel ~ createMission() called")
-
         try {
             memberService.createMission(
                 MissionCreator(
@@ -70,12 +69,13 @@ class HomeViewModel(
          *  Data change in _myInfo will be observed in MainActivity
          * */
         Log.d(TAG, "HomeViewModel ~ onStart() called")
-
-        _myInfo.postValue(
-            memberService.getMyInfo()
-        )
-        title.postValue(
-            "${_myInfo.value!!.familyId}의 ${_myInfo.value!!.id}님 환영합니다"
-        )
+        val info = memberService.getMyInfo()
+        _myInfo.postValue(info)
+        Log.d(TAG, "HomeViewModel ~ onStart() called ${_myInfo.value}")
+        _myInfo.value?.let {
+            title.postValue(
+                "${_myInfo.value!!.familyId}의 ${_myInfo.value!!.id}님 환영합니다"
+            )
+        }
     }
 }
