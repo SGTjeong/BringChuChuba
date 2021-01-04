@@ -4,23 +4,34 @@
         xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-                name="vm"
-                type="com.bring.chuchuba.viewmodel.MainViewModel"/>
+                name="homeVm"
+                type="com.bring.chuchuba.viewmodel.home.buildlogic.HomeViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             tools:context=".view.HomeFragment">
-
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/homeRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@{vm.familyName}"
-                android:gravity="center"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/createMission"/>
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@{homeVm.title}"
+                android:id="@+id/homeTitle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
+                app:layout_constraintEnd_toStartOf="@id/createMission"
+                app:layout_constraintBottom_toBottomOf="@+id/createMission"/>
+        <Button
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/createMission"
+                android:text="미션추가"
+                android:onClick="@{()->homeVm.createMission()}"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

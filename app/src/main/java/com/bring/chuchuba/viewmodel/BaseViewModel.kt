@@ -10,6 +10,9 @@ abstract class BaseViewModel<T>(protected val uiContext : CoroutineContext) : Vi
 
     private var jobTracker : Job = Job()
 
+    /**
+     * CoroutineContext 를 오버라이드 하여 “Job + 사용할 스레드를 정의한 Dispatcher” 를 지정한다.
+     */
     override val coroutineContext : CoroutineContext
-            get() = uiContext + jobTracker
+            get() = jobTracker + uiContext
 }
