@@ -31,6 +31,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding : FragmentHomeBinding
     private lateinit var homeViewModel : HomeViewModel
     private lateinit var adapter: RecyclerViewAdapter
+    private lateinit var completedAdapter : RecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +55,10 @@ class HomeFragment : Fragment() {
         adapter = RecyclerViewAdapter(BaseViewHolder.MISSION)
         binding.homeRecyclerView.adapter = adapter
         binding.homeRecyclerView.layoutManager = LinearLayoutManager(context)
+
+        completedAdapter = RecyclerViewAdapter(BaseViewHolder.MISSION)
+        binding.missionCompleteRecyclerView.adapter = completedAdapter
+        binding.missionCompleteRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,8 +86,14 @@ class HomeFragment : Fragment() {
             viewLifecycleOwner,
             Observer { missionList ->
                 missionList?:return@Observer
-                adapter.setList(missionList as ArrayList<MyItem>)
+                /**
+                 * 완료된 미션과 그렇지 않은 미션으로 구분
+                 */
+                adapter.setList(missionList.filter { it.status=="todo" } as ArrayList<MyItem>)
                 adapter.notifyDataSetChanged()
+
+                completedAdapter.setList(missionList.filter { it.status=="todo" } as ArrayList<MyItem>)
+                completedAdapter.notifyDataSetChanged()
             }
         )
     }
