@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "로그 ${this.javaClass.simpleName}"
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var firebaseAuth: FirebaseAuth
     private val mainViewModel by viewModels<MainViewModel>()
     private lateinit var homeViewModel : HomeViewModel
 
@@ -39,45 +38,19 @@ class MainActivity : AppCompatActivity() {
             HomeViewModel::class.java
         )
 
-        firebaseAuth = FirebaseAuth.getInstance()
         connectAdapter()
+        getMyInfo()
         observeViewModels()
     }
 
-    override fun onStart() {
-        super.onStart()
-        firebaseAuth.currentUser?.let {
-            getMyInfo()
-        } ?: signInAnonymously()
-    }
-
     private fun observeViewModels(){
-        /**
-         *  MainActivity is observing myInfo in ViewModel.
-         *  Observer{} will be called every time the data in myInfo changes.
-         * */
         homeViewModel.myInfo.observe(
             this,
             Observer { member ->
                 member?:return@Observer
-                showToast("member id : ${member.id}, family id : ${member.familyId}")
+                Log.d(TAG,"member id : ${member.id}, family id : ${member.familyId}")
             }
         )
-    }
-
-    private fun signInAnonymously() {
-        Log.d(TAG, "signInAnonymously")
-
-        firebaseAuth.signInAnonymously()
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "signInAnonymously:success")
-                    getMyInfo()
-                } else {
-                    Log.e(TAG, "signInAnonymously:failure", task.exception)
-                    this@MainActivity.showToast("SignInAnonymously failed")
-                }
-            }
     }
 
     private fun getMyInfo() {
