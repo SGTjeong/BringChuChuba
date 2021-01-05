@@ -1,6 +1,8 @@
 package com.bring.chuchuba
 
 import com.bring.chuchuba.model.Member
+import com.bring.chuchuba.model.family.CreateFamily
+import com.bring.chuchuba.model.family.CreateFamilyRequestBody
 import com.bring.chuchuba.model.mission.Mission
 import com.bring.chuchuba.model.mission.MissionCreator
 import com.bring.chuchuba.model.mission.response.MissionResponse
@@ -24,4 +26,9 @@ interface MemberService {
     suspend fun createMission(
         @Body mission : MissionCreator
     ) : MissionResponse
+
+    @POST("/family")
+    suspend fun createFamily(
+        @Body name : CreateFamilyRequestBody
+    ) : CreateFamily
 }

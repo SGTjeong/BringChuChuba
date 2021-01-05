@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bring.chuchuba.MemberService
 import com.bring.chuchuba.model.Member
+import com.bring.chuchuba.model.family.CreateFamily
+import com.bring.chuchuba.model.family.CreateFamilyRequestBody
 import com.bring.chuchuba.model.mission.Mission
 import com.bring.chuchuba.model.mission.MissionCreator
 import com.bring.chuchuba.viewmodel.BaseViewModel
@@ -34,21 +36,39 @@ class HomeViewModel(
         }
     }
 
-    fun createMission() = launch {
-        Log.d(TAG, "HomeViewModel ~ createMission() called")
+    fun createFamily(familyName : String) = launch {
+        Log.d(TAG, "HomeViewModel ~ createFamily() called")
+        try{
+            checkCreatedFaimly(memberService.createFamily(CreateFamilyRequestBody(familyName)))
+        } catch (e : Exception){
+            Log.e(TAG, "createFamily: $e")
+        }
+    }
 
+    private fun checkCreatedFaimly(createFamily: CreateFamily) {
+        Log.d(TAG, "HomeViewModel ~ checkCreatedFaimly() called ${createFamily.name}" +
+                "${createFamily.members.size}")
+    }
+
+    fun createMission(missionContent: String) = launch {
+        Log.d(TAG, "HomeViewModel ~ createMission() called")
         try {
+            val mlist = missionContent.split(",")
             memberService.createMission(
                 MissionCreator(
-                    "미션테스트",
+                    mlist[1],
                     myInfo.value!!.familyId.toInt(),
-                    "100",
-                    "설거지")
+                    mlist[2],
+                    mlist[0])
             )
+            /**
+             * 1.미션을 생성하고, 2.미션리스트를 갱신하고 싶은데, OnLoad를 부르면 순서대로 실행이 될까요??
+             * */
+            OnLoad()
+
         } catch (e: Exception) {
             Log.e(TAG, "createMission: $e")
         }
-
     }
 
     private fun OnLoad() = launch {
@@ -62,16 +82,10 @@ class HomeViewModel(
         }
     }
 
-    /**
-     *  When viewModel is notified a HomeEvent.OnStart, this function will be called.
-     * */
+    // When viewModel is notified a HomeEvent.OnStart, this function will be called.
     private fun onStart() = launch {
         Log.d(TAG, "HomeViewModel ~ onStart() called")
 
-        /**
-         *  _myInfo.postValue(~)를 하고 바로 _myInfo.value를 참조하면 반영이 안되있을 수 있습니다. (title.postValue(myInfo!!.value)..처럼)
-         *  _myInfo 대신 memberservice.getMyInfo()의 결과값을 title에 반영해야 npe가 뜨지 않습니다.
-         * */
         applyMyInfo(
             memberService.getMyInfo().also { _myInfo.postValue(it) }
         )
@@ -79,8 +93,15 @@ class HomeViewModel(
 
     private fun applyMyInfo(myInfo : Member.MemberGetResult){
         Log.d(TAG, "applyMyInfo : ${myInfo.id}")
-        title.postValue(
-            "${myInfo.familyId}의 ${myInfo.id}님 환영합니다"
-        )
+        if (myInfo.familyId==-1L){
+            title.postValue(
+                "${myInfo.id}님 환영합니다. 방을 만드세요!"
+            )
+        } else {
+            title.postValue(
+                "${myInfo.familyId}의 ${myInfo.id}님 환영합니다"
+            )
+            OnLoad()
+        }
     }
 }
