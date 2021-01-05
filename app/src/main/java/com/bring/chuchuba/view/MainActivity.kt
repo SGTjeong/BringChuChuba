@@ -56,7 +56,9 @@ class MainActivity : AppCompatActivity() {
          *  MainActivity is observing myInfo in ViewModel.
          *  Observer{} will be called every time the data in myInfo changes.
          * */
-        homeViewModel.myInfo.observe(this, Observer { member ->
+        homeViewModel.myInfo.observe(
+            this,
+            Observer { member ->
                 member?:return@Observer
                 showToast("member id : ${member.id}, family id : ${member.familyId}")
             }
