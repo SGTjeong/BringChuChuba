@@ -9,12 +9,9 @@ import com.bring.chuchuba.model.mission.MissionsItem
 /**
  * 미션 뷰홀더. 레이아웃과 연동
  */
-class ViewHolderMission(itemView: ItemMissionBinding) : MyItemView(itemView) {
-    var binding: ItemMissionBinding = itemView
-
+class ViewHolderMission(val binding: ItemMissionBinding) : MyItemView(binding) {
     fun onBind(item : MyItem){
         val mission = item as MissionsItem
-        binding.name.text = mission.title
-        binding.orderer.text = mission.description
+        binding.mission = mission
     }
 }

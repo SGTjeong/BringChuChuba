@@ -17,9 +17,28 @@
                 android:id="@+id/homeRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="8dp"
+                android:layout_margin="32dp"
+                android:background="@drawable/mission_window"
+                app:layout_constraintBottom_toTopOf="@id/centerline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/homeTitle"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/missionCompleteRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="8dp"
+                android:layout_margin="32dp"
+                android:background="@drawable/mission_window"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/createMission"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/centerline"/>
+
         <TextView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -36,5 +55,12 @@
                 android:onClick="@{()->homeFrag.createMission()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
+
+        <View android:layout_width="match_parent" android:layout_height="0.1dp"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintBottom_toBottomOf="parent"
+              android:id="@+id/centerline"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
