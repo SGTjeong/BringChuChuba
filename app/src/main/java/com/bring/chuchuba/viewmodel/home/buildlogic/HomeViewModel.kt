@@ -71,11 +71,6 @@ class HomeViewModel(
         Log.d(TAG, "HomeViewModel ~ onStart() called")
         val info = memberService.getMyInfo()
         _myInfo.postValue(info)
-        Log.d(TAG, "HomeViewModel ~ onStart() called ${_myInfo.value}")
-        _myInfo.value?.let {
-            title.postValue(
-                "${_myInfo.value!!.familyId}의 ${_myInfo.value!!.id}님 환영합니다"
-            )
-        }
+
     }
 }
