@@ -6,6 +6,8 @@
         <variable
                 name="homeVm"
                 type="com.bring.chuchuba.viewmodel.home.buildlogic.HomeViewModel"/>
+        <variable name="homeFrag" type="com.bring.chuchuba.view.HomeFragment"/>
+
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_height="match_parent"
@@ -31,7 +33,8 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/createMission"
                 android:text="미션추가"
-                android:onClick="@{()->homeVm.createMission()}"
-                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+                android:onClick="@{()->homeFrag.createMission()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:background="@drawable/alert_dialog">
+
+    <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="가족 이름"
+            android:textColor="#fff"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toTopOf="@+id/view"
+            android:id="@+id/textView"/>
+
+    <EditText android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:background="@drawable/alert_dialog"
+              android:id="@+id/familyName"
+              android:textColor="#fff"
+              android:layout_marginHorizontal="16dp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toEndOf="@+id/textView"
+              app:layout_constraintTop_toTopOf="@+id/textView" app:layout_constraintBottom_toBottomOf="@+id/textView"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="2dp"
+            android:background="#fff" app:layout_constraintBottom_toTopOf="@+id/linearLayout2" android:id="@+id/view"
+            tools:layout_editor_absoluteX="2dp"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/linearLayout2">
+
+        <Button
+                android:id="@+id/closeSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="취소"
+                android:textColor="#AFAFAF"
+                android:textSize="16sp"
+                android:background="@android:color/transparent" android:textStyle="bold"/>
+
+        <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#fff"/>
+
+        <Button
+                android:id="@+id/sendSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="제출"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                android:background="@android:color/transparent"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
