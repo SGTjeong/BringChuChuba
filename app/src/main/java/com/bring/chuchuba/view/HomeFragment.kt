@@ -33,6 +33,11 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        /**
+         *  binding 객체에 vm과 lifecycleowner를 지정해줘야만 livedata가 변화할 때 그것이 ui에 반영됩니다.
+         * */
+        binding.homeVm = homeViewModel
+        binding.lifecycleOwner = this
 
         settingAdapter()
         observeViewModels()

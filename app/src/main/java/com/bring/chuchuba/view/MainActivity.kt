@@ -39,16 +39,8 @@ class MainActivity : AppCompatActivity() {
             HomeViewModel::class.java
         )
 
-        firebaseAuth = FirebaseAuth.getInstance()
         connectAdapter()
         observeViewModels()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        firebaseAuth.currentUser?.let {
-            getMyInfo()
-        } ?: signInAnonymously()
     }
 
     private fun observeViewModels(){
@@ -65,20 +57,6 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun signInAnonymously() {
-        Log.d(TAG, "signInAnonymously")
-
-        firebaseAuth.signInAnonymously()
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "signInAnonymously:success")
-                    getMyInfo()
-                } else {
-                    Log.e(TAG, "signInAnonymously:failure", task.exception)
-                    this@MainActivity.showToast("SignInAnonymously failed")
-                }
-            }
-    }
 
     private fun getMyInfo() {
         Log.d(TAG, "getMemberId")

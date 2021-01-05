@@ -66,16 +66,21 @@ class HomeViewModel(
      *  When viewModel is notified a HomeEvent.OnStart, this function will be called.
      * */
     private fun onStart() = launch {
-        /**
-         *  Data change in _myInfo will be observed in MainActivity
-         * */
         Log.d(TAG, "HomeViewModel ~ onStart() called")
 
-        _myInfo.postValue(
-            memberService.getMyInfo()
+        /**
+         *  _myInfo.postValue(~)를 하고 바로 _myInfo.value를 참조하면 반영이 안되있을 수 있습니다. (title.postValue(myInfo!!.value)..처럼)
+         *  _myInfo 대신 memberservice.getMyInfo()의 결과값을 title에 반영해야 npe가 뜨지 않습니다.
+         * */
+        applyMyInfo(
+            memberService.getMyInfo().also { _myInfo.postValue(it) }
         )
+    }
+
+    private fun applyMyInfo(myInfo : Member.MemberGetResult){
+        Log.d(TAG, "applyMyInfo : ${myInfo.id}")
         title.postValue(
-            "${_myInfo.value!!.familyId}의 ${_myInfo.value!!.id}님 환영합니다"
+            "${myInfo.familyId}의 ${myInfo.id}님 환영합니다"
         )
     }
 }
