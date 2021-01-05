@@ -1,33 +1,34 @@
 package com.bring.chuchuba.adapter
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bring.chuchuba.adapter.base.BaseViewHolder
 import com.bring.chuchuba.adapter.base.MyItemView
 import com.bring.chuchuba.adapter.base.MyItem
 import android.view.LayoutInflater
-import android.view.View
 import com.bring.chuchuba.R
-import com.bring.chuchuba.adapter.base.MyList
 import com.bring.chuchuba.adapter.viewholder.ViewHolderMission
 import com.bring.chuchuba.adapter.viewholder.ViewHolderViewpager
+import com.bring.chuchuba.databinding.ItemMissionBinding
 
 
-class RecyclerViewAdapter(private val adapterType: BaseViewHolder
-                          ) : RecyclerView.Adapter<MyItemView>() {
-
+class RecyclerViewAdapter(private val adapterType: BaseViewHolder)
+    : RecyclerView.Adapter<MyItemView>() {
+    private val TAG: String = "로그"
     private var listData : ArrayList<MyItem> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyItemView {
-        val view: View
+        Log.d(TAG, "RecyclerViewAdapter ~ onCreateViewHolder() called")
+
         return when (adapterType) {
-            BaseViewHolder.VIEWPAGER -> {
-                view = LayoutInflater.from(parent.context).inflate(R.layout.item_mission, parent, false)
-                ViewHolderViewpager(view)
-            }
             BaseViewHolder.MISSION -> {
-                view = LayoutInflater.from(parent.context).inflate(R.layout.item_mission, parent, false)
-                ViewHolderMission(view)
+                val binding = ItemMissionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                ViewHolderMission(binding)
+            }
+            BaseViewHolder.VIEWPAGER -> {
+                val binding = ItemMissionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                ViewHolderMission(binding)
             }
         }
     }
@@ -50,7 +51,7 @@ class RecyclerViewAdapter(private val adapterType: BaseViewHolder
     }
 
     fun addItem(data: MyItem) = listData.add(data)
-    fun setList(data: MyList) {
+    fun setList(data: ArrayList<MyItem>) {
         listData = data
     }
 }
