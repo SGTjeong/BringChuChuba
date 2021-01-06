@@ -19,7 +19,6 @@ import com.bring.chuchuba.viewmodel.home.buildlogic.HomeEvent
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeInjector
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.make_family_dialog.*
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "로그 ${this.javaClass.simpleName}"
@@ -73,53 +72,4 @@ class MainActivity : AppCompatActivity() {
         }.attach()
     }
 
-    /**
-     * 가족 만들기 할때 띄울 다일로그
-     */
-    fun createFamily(){
-        val dlg = Dialog(this)
-        // 커스텀 다이얼로그의 레이아웃을 설정한다.
-        dlg.setContentView(R.layout.make_family_dialog)
-        dlg.show()
-        dlg.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        dlg.sendSubmit.setOnClickListener {
-            val familyName = dlg.familyName.text.trim().toString()
-            if (familyName != "") {
-                homeViewModel.createFamily(familyName)
-                dlg.dismiss()
-            } else {
-                showToast("빈칸입니다")
-            }
-        }
-        dlg.closeSubmit.setOnClickListener {
-            dlg.dismiss()
-        }
-    }
-
-    /**
-     * 미션 받는걸 액티비티로 할지 다일로그로 할지 정해지지 않아서
-     * 임시로 다일로그로 받았습니다.
-     * 가족이름란에 "title, description, reward" 형식으로 보내면 등록
-     */
-    fun createMission() {
-        val dlg = Dialog(this)
-        // 커스텀 다이얼로그의 레이아웃을 설정한다.
-        dlg.setContentView(R.layout.make_family_dialog)
-        dlg.show()
-        dlg.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        dlg.sendSubmit.setOnClickListener {
-            val missionContent = dlg.familyName.text.trim().toString()
-            if (missionContent != "") {
-                homeViewModel.createMission(missionContent)
-                dlg.dismiss()
-            } else {
-                showToast("빈칸입니다")
-            }
-        }
-        dlg.closeSubmit.setOnClickListener {
-            dlg.dismiss()
-        }
-    }
 }

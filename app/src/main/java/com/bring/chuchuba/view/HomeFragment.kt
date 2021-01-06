@@ -1,13 +1,16 @@
 package com.bring.chuchuba.view
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,32 +18,42 @@ import com.bring.chuchuba.R
 import com.bring.chuchuba.adapter.RecyclerViewAdapter
 import com.bring.chuchuba.adapter.base.BaseViewHolder
 import com.bring.chuchuba.adapter.base.MyItem
-import com.bring.chuchuba.adapter.base.MyList
 import com.bring.chuchuba.databinding.FragmentHomeBinding
-import com.bring.chuchuba.model.mission.Mission
-import com.bring.chuchuba.model.mission.MissionsItem
+import com.bring.chuchuba.databinding.MakeFamilyDialogBinding
+import com.bring.chuchuba.extension.FragmentDialog
+import com.bring.chuchuba.showToast
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeEvent
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeInjector
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeViewModel
-import kotlinx.android.synthetic.main.fragment_home.*
+import kotlin.concurrent.fixedRateTimer
 
 class HomeFragment : Fragment() {
 
     private val TAG: String = "로그 ${this.javaClass.simpleName}"
 
-    private lateinit var binding : FragmentHomeBinding
-    private lateinit var homeViewModel : HomeViewModel
+    private lateinit var binding: FragmentHomeBinding
+    private lateinit var homeViewModel: HomeViewModel
     private lateinit var adapter: RecyclerViewAdapter
-    private lateinit var completedAdapter : RecyclerViewAdapter
+    private lateinit var completedAdapter: RecyclerViewAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.run {
+            homeViewModel = ViewModelProvider(
+                this,
+                HomeInjector().provideViewModelFactory()
+            ).get(
+                HomeViewModel::class.java
+            )
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-        /**
-         *  binding 객체에 vm과 lifecycleowner를 지정해줘야만 livedata가 변화할 때 그것이 ui에 반영됩니다.
-         * */
+
         binding.homeVm = homeViewModel
         binding.homeFrag = this
         binding.lifecycleOwner = this
@@ -61,45 +74,54 @@ class HomeFragment : Fragment() {
         binding.missionCompleteRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        activity?.run{
-            homeViewModel = ViewModelProvider(
-                this,
-                HomeInjector().provideViewModelFactory()
-            ).get(
-                HomeViewModel::class.java
-            )
-//            homeViewModel.handleEvent(HomeEvent.OnLoad)
-        }
-    }
 
-    private fun observeViewModels(){
+    private fun observeViewModels() {
         homeViewModel.myInfo.observe(
             viewLifecycleOwner,
             Observer { member ->
-                member?:return@Observer
+                member ?: return@Observer
             }
         )
 
         homeViewModel.missionData.observe(
             viewLifecycleOwner,
             Observer { missionList ->
-                missionList?:return@Observer
+                missionList ?: return@Observer
                 /**
                  * 완료된 미션과 그렇지 않은 미션으로 구분
                  */
-                adapter.setList(missionList.filter { it.status=="todo" } as ArrayList<MyItem>)
+                adapter.setList(missionList.filter { it.status == "todo" } as ArrayList<MyItem>)
                 adapter.notifyDataSetChanged()
 
-                completedAdapter.setList(missionList.filter { it.status=="todo" } as ArrayList<MyItem>)
+                completedAdapter.setList(missionList.filter { it.status == "todo" } as ArrayList<MyItem>)
                 completedAdapter.notifyDataSetChanged()
             }
         )
     }
 
-    fun createMission(){
-        (activity as MainActivity).createMission()
+    /**
+     * 임시로 가족이름란에 "title, description, reward" 형식으로 보내면 등록
+     * 데이터바인딩을 하려는데 다이얼로그가 작게나오는 현상..
+     */
+    fun createMission() {
+        val dlg = FragmentDialog()
+        dlg.show(parentFragmentManager, "mission")
+//        dlg.binding.sendSubmit.setOnClickListener {
+//            val missionContent = dlg.binding.familyName.text.trim().toString()
+//            if (missionContent != "") {
+//                val mlist = missionContent.split(",")
+//                homeViewModel.handleEvent(
+//                    HomeEvent.OnMissionCreateRequest(
+//                        title = mlist[0], description = mlist[1], reward = mlist[2]
+//                    )
+//                )
+//                dlg.dismiss()
+//            } else {
+//                showToast("빈칸입니다")
+//            }
+//        }
+//        dlg.binding.closeSubmit.setOnClickListener {
+//            dlg.dismiss()
+//        }
     }
-
 }

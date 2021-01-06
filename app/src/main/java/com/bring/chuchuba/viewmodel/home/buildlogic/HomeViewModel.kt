@@ -32,46 +32,45 @@ class HomeViewModel(
     override fun handleEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.OnStart -> onStart()
-            is HomeEvent.OnLoad -> OnLoad()
+            is HomeEvent.OnLoad -> onLoad()
+            is HomeEvent.OnFamilyRequest -> onCreateFamily(event.familyName)
+            is HomeEvent.OnMissionCreateRequest -> onCreateMission(event.title, event.description, event.reward)
         }
     }
 
-    fun createFamily(familyName : String) = launch {
+
+    // myinfo프래그먼트 -> 가족만들기
+    private fun onCreateFamily(familyName : String) = launch {
         Log.d(TAG, "HomeViewModel ~ createFamily() called")
         try{
-            checkCreatedFaimly(memberService.createFamily(CreateFamilyRequestBody(familyName)))
+            val createFamily = memberService.createFamily(CreateFamilyRequestBody(familyName))
+            Log.d(TAG, "HomeViewModel ~ checkCreatedFaimly() called ${createFamily.name}" +
+                    "${createFamily.members.size}")
         } catch (e : Exception){
             Log.e(TAG, "createFamily: $e")
         }
     }
 
-    private fun checkCreatedFaimly(createFamily: CreateFamily) {
-        Log.d(TAG, "HomeViewModel ~ checkCreatedFaimly() called ${createFamily.name}" +
-                "${createFamily.members.size}")
-    }
-
-    fun createMission(missionContent: String) = launch {
+    // 홈프래그먼트 -> 미션만들기
+    private fun onCreateMission(title : String, description : String, reward : String) = launch {
         Log.d(TAG, "HomeViewModel ~ createMission() called")
         try {
-            val mlist = missionContent.split(",")
             memberService.createMission(
                 MissionCreator(
-                    mlist[1],
+                    description,
                     myInfo.value!!.familyId.toInt(),
-                    mlist[2],
-                    mlist[0])
+                    reward,
+                    title)
             )
-            /**
-             * 1.미션을 생성하고, 2.미션리스트를 갱신하고 싶은데, OnLoad를 부르면 순서대로 실행이 될까요??
-             * */
-            OnLoad()
-
+            // 미션 생성후, 미션 다시 불러오기.
+            // 등록된 미션이 응답으로 오기 때문에, 간단한 확인 메세지를 띄워도 좋을듯
+            onLoad()
         } catch (e: Exception) {
             Log.e(TAG, "createMission: $e")
         }
     }
 
-    private fun OnLoad() = launch {
+    private fun onLoad() = launch {
         Log.d(TAG, "HomeViewModel ~ OnLoad() called")
         try {
             _missionData.postValue(
@@ -101,7 +100,7 @@ class HomeViewModel(
             title.postValue(
                 "${myInfo.familyId}의 ${myInfo.id}님 환영합니다"
             )
-            OnLoad()
+            onLoad()
         }
     }
 }

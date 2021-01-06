@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
 }
@@ -51,6 +50,7 @@ dependencies {
 
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation "androidx.fragment:fragment-ktx:1.2.5"
+    kapt 'com.android.databinding:compiler:4.0.2'
     // 코루틴
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
 
