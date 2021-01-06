@@ -6,6 +6,8 @@
         <variable
                 name="homeVm"
                 type="com.bring.chuchuba.viewmodel.home.buildlogic.HomeViewModel"/>
+        <variable name="homeFrag" type="com.bring.chuchuba.view.HomeFragment"/>
+
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_height="match_parent"
@@ -15,9 +17,28 @@
                 android:id="@+id/homeRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="8dp"
+                android:layout_margin="32dp"
+                android:background="@drawable/mission_window"
+                app:layout_constraintBottom_toTopOf="@id/centerline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/homeTitle"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/missionCompleteRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="8dp"
+                android:layout_margin="32dp"
+                android:background="@drawable/mission_window"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/createMission"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/centerline"/>
+
         <TextView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -31,7 +52,15 @@
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:id="@+id/createMission"
                 android:text="미션추가"
-                android:onClick="@{()->homeVm.createMission()}"
-                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+                android:onClick="@{()->homeFrag.createMission()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <View android:layout_width="match_parent" android:layout_height="0.1dp"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintBottom_toBottomOf="parent"
+              android:id="@+id/centerline"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

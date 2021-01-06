@@ -1,6 +1,7 @@
 package com.bring.chuchuba.adapter.base
 
-import android.view.View
+import android.graphics.Movie
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
-open class MyItemView(itemView: View) : RecyclerView.ViewHolder(itemView)
+open class MyItemView(itemView: ViewDataBinding) : RecyclerView.ViewHolder(itemView.root)

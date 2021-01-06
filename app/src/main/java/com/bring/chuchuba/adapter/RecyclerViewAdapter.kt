@@ -6,38 +6,28 @@ import com.bring.chuchuba.adapter.base.BaseViewHolder
 import com.bring.chuchuba.adapter.base.MyItemView
 import com.bring.chuchuba.adapter.base.MyItem
 import android.view.LayoutInflater
-import android.view.View
-import com.bring.chuchuba.R
-import com.bring.chuchuba.adapter.base.MyList
 import com.bring.chuchuba.adapter.viewholder.ViewHolderMission
-import com.bring.chuchuba.adapter.viewholder.ViewHolderViewpager
+import com.bring.chuchuba.databinding.ItemMissionBinding
 
 
-class RecyclerViewAdapter(private val adapterType: BaseViewHolder
-                          ) : RecyclerView.Adapter<MyItemView>() {
+class RecyclerViewAdapter(private val adapterType: BaseViewHolder)
+    : RecyclerView.Adapter<MyItemView>() {
 
     private var listData : ArrayList<MyItem> = ArrayList()
 
+    override fun getItemCount() = listData.size
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyItemView {
-        val view: View
         return when (adapterType) {
-            BaseViewHolder.VIEWPAGER -> {
-                view = LayoutInflater.from(parent.context).inflate(R.layout.item_mission, parent, false)
-                ViewHolderViewpager(view)
-            }
             BaseViewHolder.MISSION -> {
-                view = LayoutInflater.from(parent.context).inflate(R.layout.item_mission, parent, false)
-                ViewHolderMission(view)
+                val binding = ItemMissionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                ViewHolderMission(binding)
             }
         }
     }
 
     override fun onBindViewHolder(holder: MyItemView, position: Int) {
         when (holder) {
-            is ViewHolderViewpager -> {
-                val viewHolder: ViewHolderViewpager = holder
-                viewHolder.onBind(listData[position])
-            }
             is ViewHolderMission -> {
                 val viewHolder: ViewHolderMission = holder
                 viewHolder.onBind(listData[position])
@@ -45,12 +35,6 @@ class RecyclerViewAdapter(private val adapterType: BaseViewHolder
         }
     }
 
-    override fun getItemCount(): Int {
-        return listData.size
-    }
-
     fun addItem(data: MyItem) = listData.add(data)
-    fun setList(data: MyList) {
-        listData = data
-    }
+    fun setList(data: ArrayList<MyItem>) { listData = data }
 }
