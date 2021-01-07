@@ -1,8 +1,5 @@
 package com.bring.chuchuba.view
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.bring.chuchuba.R
 import com.bring.chuchuba.databinding.FragmentMyInfoBinding
+import com.bring.chuchuba.extension.CreateFamilyDialog
 import com.bring.chuchuba.showToast
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeEvent
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeInjector
@@ -47,28 +45,18 @@ class MyInfoFragment : Fragment() {
         return binding.root
     }
 
-    /**
-     * 뷰모델에게 이벤트 처리
-     * 다이얼로그만 잘 처리하면...
-     */
     fun createFamily() {
-        val dlg = Dialog(requireContext())
-        dlg.setContentView(R.layout.make_family_dialog)
-        dlg.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val dlg = CreateFamilyDialog(requireContext()) { familyName ->
+            if (familyName != "") {
+                homeViewModel.handleEvent(HomeEvent.OnFamilyRequest(familyName))
+            } else {
+                showToast("빈칸입니다")
+            }
+            homeViewModel.handleEvent(HomeEvent.OnFamilyRequest(familyName))
+        }
         dlg.show()
 
-//        dlg.sendSubmit.setOnClickListener {
-//            val familyName = dlg.familyName.text.trim().toString()
-//            if (familyName != "") {
-//                homeViewModel.handleEvent(HomeEvent.OnFamilyRequest(familyName))
-//                dlg.dismiss()
-//            } else {
-//                showToast("빈칸입니다")
-//            }
-//        }
-//        dlg.closeSubmit.setOnClickListener {
-//            dlg.dismiss()
-//        }
     }
 
 }

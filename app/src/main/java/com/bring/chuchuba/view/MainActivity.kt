@@ -1,14 +1,12 @@
 package com.bring.chuchuba.view
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bring.chuchuba.*
@@ -64,8 +62,8 @@ class MainActivity : AppCompatActivity() {
     private fun connectAdapter() {
         val tabTextList : List<String> = listOf("홈", "달력", "나의 상태")
         val tabIconList : List<Drawable> = listOf()
-        binding.viewPager2.adapter = CustomFragmentAdapter(this)
-        TabLayoutMediator(binding.tabLayout, binding.viewPager2) {
+        binding.mainContainer.adapter = CustomFragmentAdapter(this)
+        TabLayoutMediator(binding.tabLayout, binding.mainContainer) {
                 tab, position ->
             // tab.setIcon(tabIconList[position])
             tab.text = tabTextList[position]
