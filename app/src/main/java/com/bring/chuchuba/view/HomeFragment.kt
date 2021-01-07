@@ -11,18 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bring.chuchuba.R
-import com.bring.chuchuba.adapter.RecyclerViewAdapter
-import com.bring.chuchuba.adapter.base.BaseViewHolder
-import com.bring.chuchuba.adapter.base.MyItem
 import com.bring.chuchuba.databinding.FragmentHomeBinding
-import com.bring.chuchuba.showToast
-import com.bring.chuchuba.viewmodel.home.buildlogic.HomeEvent
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeInjector
-import com.bring.chuchuba.viewmodel.home.buildlogic.HomeViewModel
+import com.bring.chuchuba.viewmodel.HomeViewModel
 
-import androidx.fragment.app.FragmentTransaction
 import com.bring.chuchuba.adapter.PlaceRecyclerAdapter
-import com.bring.chuchuba.model.mission.MissionsItem
 
 
 class HomeFragment : Fragment() {
@@ -36,14 +29,12 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.run {
-            homeViewModel = ViewModelProvider(
-                this,
-                HomeInjector().provideViewModelFactory()
-            ).get(
-                HomeViewModel::class.java
-            )
-        }
+        homeViewModel = ViewModelProvider(
+            requireActivity(),
+            HomeInjector().provideViewModelFactory()
+        ).get(
+            HomeViewModel::class.java
+        )
     }
 
     override fun onCreateView(
@@ -84,6 +75,7 @@ class HomeFragment : Fragment() {
         homeViewModel.missionData.observe(
             viewLifecycleOwner,
             Observer { missionList ->
+                Log.d(TAG, "HomeFragment ~ observeViewModels() called")
                 missionList ?: return@Observer
                 /**
                  * 완료된 미션과 그렇지 않은 미션으로 구분
@@ -95,11 +87,16 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     * 임시로 가족이름란에 "title, description, reward" 형식으로 보내면 등록
      * 새로운 프레그먼트를 띄우기
+     * CreatemissionFragment가 올라왔는데 뒤에있는 homefragment도 클릭이 되는 현상
+     * "미션추가 버튼"이 보이지 않지만 클릭은 계속 되서 CreatemissionFragment가 계속 쌓임
      */
     fun createMission() {
-
+        val transaction =
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, CreateMissionFragment())
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
 }

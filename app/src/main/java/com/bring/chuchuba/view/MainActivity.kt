@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bring.chuchuba.*
@@ -15,7 +14,7 @@ import com.bring.chuchuba.viewmodel.MainViewModel
 import com.bring.chuchuba.databinding.ActivityMainBinding
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeEvent
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeInjector
-import com.bring.chuchuba.viewmodel.home.buildlogic.HomeViewModel
+import com.bring.chuchuba.viewmodel.HomeViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
@@ -54,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getMyInfo() {
         Log.d(TAG, "getMemberId")
-        homeViewModel.handleEvent(HomeEvent.OnStart)
+        homeViewModel.handleEvent(HomeEvent.OnLogin)
     }
 
 
@@ -62,8 +61,8 @@ class MainActivity : AppCompatActivity() {
     private fun connectAdapter() {
         val tabTextList : List<String> = listOf("홈", "달력", "나의 상태")
         val tabIconList : List<Drawable> = listOf()
-        binding.mainContainer.adapter = CustomFragmentAdapter(this)
-        TabLayoutMediator(binding.tabLayout, binding.mainContainer) {
+        binding.mainViewpager.adapter = CustomFragmentAdapter(this)
+        TabLayoutMediator(binding.tabLayout, binding.mainViewpager) {
                 tab, position ->
             // tab.setIcon(tabIconList[position])
             tab.text = tabTextList[position]

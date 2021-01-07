@@ -2,5 +2,6 @@ package com.bring.chuchuba.model.mission
 
 data class Contractor(
     val familyId: Int,
-    val id: Int
+    val id: Int,
+    val point: String
 )

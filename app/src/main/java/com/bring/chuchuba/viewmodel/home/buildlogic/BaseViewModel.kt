@@ -1,4 +1,4 @@
-package com.bring.chuchuba.viewmodel
+package com.bring.chuchuba.viewmodel.home.buildlogic
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope

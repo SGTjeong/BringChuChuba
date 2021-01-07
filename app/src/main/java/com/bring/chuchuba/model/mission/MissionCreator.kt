@@ -4,5 +4,6 @@ data class MissionCreator(
     val description: String,
     val familyId: Int,
     val reward: String,
-    val title: String
+    val title: String,
+    val expireAt: String
 )

@@ -5,7 +5,7 @@
     <data>
         <variable
                 name="homeVm"
-                type="com.bring.chuchuba.viewmodel.home.buildlogic.HomeViewModel"/>
+                type="com.bring.chuchuba.viewmodel.HomeViewModel"/>
         <variable name="homeFrag" type="com.bring.chuchuba.view.HomeFragment"/>
 
     </data>
@@ -43,6 +43,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="@{homeVm.title}"
+                android:gravity="center"
                 android:id="@+id/homeTitle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

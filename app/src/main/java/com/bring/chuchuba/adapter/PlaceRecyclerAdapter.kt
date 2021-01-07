@@ -3,6 +3,7 @@ package com.bring.chuchuba.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import com.bring.chuchuba.adapter.base.MyItem
 import com.bring.chuchuba.adapter.util.MissionDiffUtil
 import com.bring.chuchuba.adapter.viewholder.ViewHolderMission
 import com.bring.chuchuba.databinding.ItemMissionBinding
