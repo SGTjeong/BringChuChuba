@@ -4,7 +4,7 @@ import com.bring.chuchuba.model.mission.Client
 import com.bring.chuchuba.model.mission.MissionsItem
 
 data class JoinFamilyResponse(
-    val id: Int,
+    val id: String?,
     val members: List<Client>,
     val missions: List<MissionsItem>,
     val name: String

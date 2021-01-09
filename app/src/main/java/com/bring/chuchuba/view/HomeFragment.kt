@@ -15,7 +15,7 @@ import com.bring.chuchuba.databinding.FragmentHomeBinding
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeInjector
 import com.bring.chuchuba.viewmodel.HomeViewModel
 
-import com.bring.chuchuba.adapter.PlaceRecyclerAdapter
+import com.bring.chuchuba.adapter.mission.MissionListAdapter
 
 
 class HomeFragment : Fragment() {
@@ -24,8 +24,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var adapter: PlaceRecyclerAdapter
-    private lateinit var completedAdapter: PlaceRecyclerAdapter
+    private lateinit var adapter: MissionListAdapter
+    private lateinit var completedAdapter: MissionListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,11 +54,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun settingAdapter() {
-        adapter = PlaceRecyclerAdapter()
+        adapter = MissionListAdapter()
         binding.homeRecyclerView.adapter = adapter
         binding.homeRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        completedAdapter = PlaceRecyclerAdapter()
+        completedAdapter = MissionListAdapter()
         binding.missionCompleteRecyclerView.adapter = completedAdapter
         binding.missionCompleteRecyclerView.layoutManager = LinearLayoutManager(context)
     }

@@ -13,6 +13,7 @@ import com.bring.chuchuba.showToast
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeEvent
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeInjector
 import com.bring.chuchuba.viewmodel.HomeViewModel
+import com.google.android.material.tabs.TabLayout
 
 class CreateMissionFragment : Fragment() {
 
@@ -44,7 +45,13 @@ class CreateMissionFragment : Fragment() {
         binding.cmFrag = this
         binding.lifecycleOwner = this
 
+
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+//        requireActivity().findViewById<TabLayout>(R.id.tabLayout).isClickable = true
     }
 
     fun submitMission(){
@@ -57,6 +64,5 @@ class CreateMissionFragment : Fragment() {
             requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
         }
         else this.showToast("빈칸이 있습니다")
-
     }
 }

@@ -83,7 +83,7 @@ class HomeViewModel(
             memberService.createMission(
                 MissionCreator(
                     description,
-                    myInfo.value!!.familyId.toInt(),
+                    myInfo.value!!.familyId,
                     reward,
                     title,
                     expireAt)
@@ -98,7 +98,7 @@ class HomeViewModel(
         Log.d(TAG, "HomeViewModel ~ OnLoad() called")
         try {
             _missionData.postValue(
-                myInfo.value?.let { memberService.getMissions(it.familyId.toInt()) }
+                myInfo.value?.familyId?.let { memberService.getMissions(it.toInt()) }
             )
         } catch (e: Exception) {
             Log.e(TAG, "OnLoad: $e")
@@ -115,7 +115,7 @@ class HomeViewModel(
 
     private fun applyMyInfo(myInfo : Member.MemberGetResult){
         Log.d(TAG, "applyMyInfo : ${myInfo.id}")
-        if (myInfo.familyId==-1L){
+        if (myInfo.familyId.isNullOrBlank()){
             title.postValue(
                 "${myInfo.id}님 환영합니다. 방을 만드세요!"
             )

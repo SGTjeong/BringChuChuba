@@ -1,4 +1,4 @@
-package com.bring.chuchuba.adapter.viewholder
+package com.bring.chuchuba.adapter.mission
 
 import android.graphics.Movie
 import com.bring.chuchuba.adapter.base.MyItem

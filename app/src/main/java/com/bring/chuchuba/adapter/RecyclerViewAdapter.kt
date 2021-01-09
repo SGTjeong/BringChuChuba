@@ -6,7 +6,7 @@ import com.bring.chuchuba.adapter.base.BaseViewHolder
 import com.bring.chuchuba.adapter.base.MyItemView
 import com.bring.chuchuba.adapter.base.MyItem
 import android.view.LayoutInflater
-import com.bring.chuchuba.adapter.viewholder.ViewHolderMission
+import com.bring.chuchuba.adapter.mission.ViewHolderMission
 import com.bring.chuchuba.databinding.ItemMissionBinding
 
 
