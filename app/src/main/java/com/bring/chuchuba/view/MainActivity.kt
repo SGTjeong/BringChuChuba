@@ -1,5 +1,6 @@
 package com.bring.chuchuba.view
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -49,13 +50,15 @@ class MainActivity : AppCompatActivity() {
                 showToast("member id : ${member.id}, family id : ${member.familyId}")
             }
         )
+        homeViewModel.jobSucceedOrFail.observe(this){ msg ->
+            this.showToast(msg)
+        }
     }
 
     private fun getMyInfo() {
         Log.d(TAG, "getMemberId")
         homeViewModel.handleEvent(HomeEvent.OnLogin)
     }
-
 
     // 뷰 페이저와 프레그먼트,탭레이아웃 연결
     private fun connectAdapter() {

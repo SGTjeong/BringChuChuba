@@ -30,6 +30,10 @@ class HomeViewModel(
     private val _missionData = MutableLiveData<Mission>()
     val missionData: LiveData<Mission> get() = _missionData
 
+    // 성공여부
+    private val _jobSucceedOrFail : MutableLiveData<String> = MutableLiveData()
+    val jobSucceedOrFail : LiveData<String> get() = _jobSucceedOrFail
+
     override fun handleEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.OnLogin -> onLogin()
@@ -53,8 +57,10 @@ class HomeViewModel(
             val joinFamily = memberService.joinFamily(JoinFamilyRequestBody(familyId.toInt()))
             Log.d(TAG, "HomeViewModel ~ onJoinFamily() success to ${joinFamily.name}")
             onLogin()
+            _jobSucceedOrFail.postValue("\"${joinFamily.name}\"에 참여하였습니다!")
         }catch (e : Exception){
             Log.e(TAG, "onJoinFamily: $e", )
+            _jobSucceedOrFail.postValue("가족 참여 실패!")
         }
     }
 
@@ -66,12 +72,11 @@ class HomeViewModel(
             val createFamily = memberService.createFamily(CreateFamilyRequestBody(familyName))
             Log.d(TAG, "HomeViewModel ~ checkCreatedFaimly() called ${createFamily.name}" +
                     "${createFamily.members.size}")
+            _jobSucceedOrFail.postValue("Welcome to \"${createFamily.name}\"")
             onLogin()
-            
-//            callback(createFamily.name)
         } catch (e : Exception){
             Log.e(TAG, "createFamily: $e")
-//            callback("")
+            _jobSucceedOrFail.postValue("가족 만들기 실패!")
         }
     }
 
@@ -88,9 +93,11 @@ class HomeViewModel(
                     title,
                     expireAt)
             )
+            _jobSucceedOrFail.postValue("미션 \"$title\" 생성 완료!")
             onLoadMission()
         } catch (e: Exception) {
             Log.e(TAG, "createMission: $e")
+            _jobSucceedOrFail.postValue("미션 만들기 실패!")
         }
     }
 

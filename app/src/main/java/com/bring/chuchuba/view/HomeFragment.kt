@@ -16,7 +16,7 @@ import com.bring.chuchuba.viewmodel.home.buildlogic.HomeInjector
 import com.bring.chuchuba.viewmodel.HomeViewModel
 
 import com.bring.chuchuba.adapter.mission.MissionListAdapter
-
+import com.bring.chuchuba.showToast
 
 class HomeFragment : Fragment() {
 
@@ -75,7 +75,7 @@ class HomeFragment : Fragment() {
         homeViewModel.missionData.observe(
             viewLifecycleOwner,
             Observer { missionList ->
-                Log.d(TAG, "HomeFragment ~ observeViewModels() called")
+                Log.d(TAG, "HomeFragment ~ missiondata() called $missionList")
                 missionList ?: return@Observer
                 /**
                  * 완료된 미션과 그렇지 않은 미션으로 구분
@@ -86,11 +86,6 @@ class HomeFragment : Fragment() {
         )
     }
 
-    /**
-     * 새로운 프레그먼트를 띄우기
-     * CreatemissionFragment가 올라왔는데 뒤에있는 homefragment도 클릭이 되는 현상
-     * "미션추가 버튼"이 보이지 않지만 클릭은 계속 되서 CreatemissionFragment가 계속 쌓임
-     */
     fun createMission() {
         val transaction =
             requireActivity().supportFragmentManager.beginTransaction()
