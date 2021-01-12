@@ -45,16 +45,10 @@ class HomeViewModel(
         }
     }
 
-    /**
-     *  myinfo프래그먼트 -> 가족 참여
-     *  가족만들기, 참여는 콜백으로 성공여부를 알려주고 싶은데, 그러면 뷰모델에서 뷰에게 의존성이 생길거같아서,
-     *  에러도 발생
-     *  라이브데이터를 활용해아할까?
-     */
     private fun onJoinFamily(familyId: String) = launch{
         Log.d(TAG, "HomeViewModel ~ onJoinFamily() called")
         try{
-            val joinFamily = memberService.joinFamily(JoinFamilyRequestBody(familyId.toInt()))
+            val joinFamily = memberService.joinFamily(JoinFamilyRequestBody(familyId))
             Log.d(TAG, "HomeViewModel ~ onJoinFamily() success to ${joinFamily.name}")
             onLogin()
             _jobSucceedOrFail.postValue("\"${joinFamily.name}\"에 참여하였습니다!")
@@ -115,9 +109,14 @@ class HomeViewModel(
     // When viewModel is notified a HomeEvent.OnStart, this function will be called.
     private fun onLogin() = launch {
         Log.d(TAG, "HomeViewModel ~ onStart() called")
-        applyMyInfo(
-            memberService.getMyInfo().also { _myInfo.postValue(it) }
-        )
+        try {
+            applyMyInfo(
+                memberService.getMyInfo().also { _myInfo.postValue(it) }
+            )
+        }catch (e : Exception){
+            Log.e(TAG, "onLogin: $e")
+        }
+
     }
 
     private fun applyMyInfo(myInfo : Member.MemberGetResult){
