@@ -1,10 +1,9 @@
 package com.bring.chuchuba
 
 import com.bring.chuchuba.model.Member
-import com.bring.chuchuba.model.family.CreateFamily
 import com.bring.chuchuba.model.family.CreateFamilyRequestBody
+import com.bring.chuchuba.model.family.FamilyResponse
 import com.bring.chuchuba.model.family.JoinFamilyRequestBody
-import com.bring.chuchuba.model.family.JoinFamilyResponse
 import com.bring.chuchuba.model.mission.Mission
 import com.bring.chuchuba.model.mission.MissionCreator
 import com.bring.chuchuba.model.mission.MissionsItem
@@ -33,10 +32,20 @@ interface MemberService {
     @POST("/family")
     suspend fun createFamily(
         @Body name : CreateFamilyRequestBody
-    ) : CreateFamily
+    ) : FamilyResponse
 
     @PUT("/family")
     suspend fun joinFamily(
         @Body familyId : JoinFamilyRequestBody
-    ) : JoinFamilyResponse
+    ) : FamilyResponse
+
+    @PATCH("/mission/client/{mission_uid}")
+    suspend fun completeMission(
+
+    )
+
+    @PATCH("/mission/contractor/{mission_uid}")
+    suspend fun contractMission(
+
+    )
 }

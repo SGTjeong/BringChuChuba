@@ -4,8 +4,9 @@ data class Member(
     val uid : Long
 ){
     data class MemberGetResult(
-        val id : String?,
         val familyId : String?,
+        val id : String?,
+        val nickname : String?,
         val point : String?
         )
 }

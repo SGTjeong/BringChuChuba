@@ -9,8 +9,8 @@ data class MissionsItem(
     val createdAt: String,
     val expireAt: String,
     val modifiedAt: String,
-    val familyId: Int,
-    val id: Int,
+    val familyId: String,
+    val id: String,
     val reward: String,
     val status: String,
     val title: String
