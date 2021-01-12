@@ -1,8 +1,6 @@
 package com.bring.chuchuba.view
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +15,7 @@ import com.bring.chuchuba.viewmodel.MainViewModel
 import com.bring.chuchuba.databinding.ActivityMainBinding
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeEvent
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeInjector
-import com.bring.chuchuba.viewmodel.home.buildlogic.HomeViewModel
+import com.bring.chuchuba.viewmodel.HomeViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
@@ -52,20 +50,22 @@ class MainActivity : AppCompatActivity() {
                 showToast("member id : ${member.id}, family id : ${member.familyId}")
             }
         )
+        homeViewModel.jobSucceedOrFail.observe(this){ msg ->
+            this.showToast(msg)
+        }
     }
 
     private fun getMyInfo() {
         Log.d(TAG, "getMemberId")
-        homeViewModel.handleEvent(HomeEvent.OnStart)
+        homeViewModel.handleEvent(HomeEvent.OnLogin)
     }
-
 
     // 뷰 페이저와 프레그먼트,탭레이아웃 연결
     private fun connectAdapter() {
         val tabTextList : List<String> = listOf("홈", "달력", "나의 상태")
         val tabIconList : List<Drawable> = listOf()
-        binding.viewPager2.adapter = CustomFragmentAdapter(this)
-        TabLayoutMediator(binding.tabLayout, binding.viewPager2) {
+        binding.mainViewpager.adapter = CustomFragmentAdapter(this)
+        TabLayoutMediator(binding.tabLayout, binding.mainViewpager) {
                 tab, position ->
             // tab.setIcon(tabIconList[position])
             tab.text = tabTextList[position]

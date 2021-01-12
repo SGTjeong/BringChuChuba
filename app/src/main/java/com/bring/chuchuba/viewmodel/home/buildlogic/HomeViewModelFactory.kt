@@ -3,6 +3,7 @@ package com.bring.chuchuba.viewmodel.home.buildlogic
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bring.chuchuba.MemberService
+import com.bring.chuchuba.viewmodel.HomeViewModel
 import kotlinx.coroutines.Dispatchers
 
 class HomeViewModelFactory(
@@ -16,4 +17,5 @@ class HomeViewModelFactory(
             Dispatchers.IO
         ) as T
     }
+
 }

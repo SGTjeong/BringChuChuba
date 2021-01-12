@@ -1,8 +1,5 @@
 package com.bring.chuchuba.view
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,15 +9,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.bring.chuchuba.R
 import com.bring.chuchuba.databinding.FragmentMyInfoBinding
+import com.bring.chuchuba.extension.CreateFamilyDialog
 import com.bring.chuchuba.showToast
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeEvent
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeInjector
-import com.bring.chuchuba.viewmodel.home.buildlogic.HomeViewModel
+import com.bring.chuchuba.viewmodel.HomeViewModel
 
 class MyInfoFragment : Fragment() {
 
-    private lateinit var binding: FragmentMyInfoBinding
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var binding : FragmentMyInfoBinding
+    private lateinit var homeViewModel : HomeViewModel
+    var fId : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,28 +46,34 @@ class MyInfoFragment : Fragment() {
         return binding.root
     }
 
-    /**
-     * 뷰모델에게 이벤트 처리
-     * 다이얼로그만 잘 처리하면...
-     */
     fun createFamily() {
-        val dlg = Dialog(requireContext())
-        dlg.setContentView(R.layout.make_family_dialog)
-        dlg.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val dlg = CreateFamilyDialog(requireContext()) { familyName ->
+            if (familyName != "") {
+                homeViewModel.handleEvent(HomeEvent.OnCreateFamily(familyName))
+//                { response ->
+//                    if (response == "") this.showToast("가족 만들기 실패!")
+//                    else this.showToast("\"${response}\"방에 입장했습니다!")
+//                })
+            } else {
+                this.showToast("빈칸입니다")
+            }
+        }
         dlg.show()
+    }
 
-//        dlg.sendSubmit.setOnClickListener {
-//            val familyName = dlg.familyName.text.trim().toString()
-//            if (familyName != "") {
-//                homeViewModel.handleEvent(HomeEvent.OnFamilyRequest(familyName))
-//                dlg.dismiss()
-//            } else {
-//                showToast("빈칸입니다")
-//            }
-//        }
-//        dlg.closeSubmit.setOnClickListener {
-//            dlg.dismiss()
-//        }
+    /**
+     * 가족 아이디로 조인하는 함수. 딥링크로 호출? 예정
+     */
+    fun joinFamily(){
+        if (fId != ""){
+            homeViewModel.handleEvent(HomeEvent.OnJoinFamily(fId))
+//            { response ->
+//                if (response == "") this.showToast("가족 입장 실패!")
+//                else this.showToast("\"${response}\"방에 입장했습니다!")
+//            })
+        } else {
+            this.showToast("check!")
+        }
     }
 
 }

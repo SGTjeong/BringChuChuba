@@ -7,7 +7,7 @@
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_height="200dp"
             android:layout_gravity="center"
             android:background="@drawable/alert_dialog">
 
@@ -22,7 +22,7 @@
                 android:id="@+id/textView"/>
 
         <EditText android:layout_width="0dp"
-                  android:layout_height="wrap_content"
+                  android:layout_height="30dp"
                   android:background="@drawable/alert_dialog"
                   android:id="@+id/familyName"
                   android:textColor="#fff"
