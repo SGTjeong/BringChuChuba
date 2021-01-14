@@ -22,6 +22,7 @@
         <EditText android:layout_width="0dp" android:layout_height="wrap_content"
                   android:hint="가족ID 입력(딥링크로 할 예정)"
                   android:text="@={infoFrag.fId}"
+                  android:imeOptions="actionDone"
                   android:textSize="12sp"
                   app:layout_constraintTop_toTopOf="@+id/button2"
                   app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toStartOf="@+id/button2"/>

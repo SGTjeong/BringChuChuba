@@ -55,8 +55,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentLayout.Home) {
                 Log.d(TAG, "HomeFragment ~ missiondata() called $missionList")
                 missionList ?: return@Observer
 
-                adapter.submitList(missionList.filter { it.status != "done" })
-                completedAdapter.submitList(missionList.filter { it.status == "done" })
+                adapter.submitList(missionList.filter { it.status != "complete" })
+                completedAdapter.submitList(missionList.filter { it.status == "complete" })
             }
         )
     }
