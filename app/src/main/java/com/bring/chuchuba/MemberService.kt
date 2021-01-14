@@ -1,5 +1,6 @@
 package com.bring.chuchuba
 
+import com.bring.chuchuba.model.ChangeNicknameRequestBody
 import com.bring.chuchuba.model.Member
 import com.bring.chuchuba.model.family.CreateFamilyRequestBody
 import com.bring.chuchuba.model.family.FamilyResponse
@@ -12,6 +13,11 @@ import retrofit2.http.*
 interface MemberService {
     @GET("/member")
     suspend fun getMyInfo() : Member.MemberGetResult
+
+    @POST("/member/nickname")
+    suspend fun changeNickName(
+        @Body nickname : ChangeNicknameRequestBody
+    ) : Member.MemberGetResult
 
     @GET("/mission")
     suspend fun getMissions(
@@ -41,8 +47,8 @@ interface MemberService {
 
     @PATCH("/mission/client/{mission_uid}")
     suspend fun completeMission(
-
-    )
+        @Path("mission_uid") mission_uid : String
+    ) : MissionsItem
 
     @PATCH("/mission/contractor/{mission_uid}")
     suspend fun contractMission(

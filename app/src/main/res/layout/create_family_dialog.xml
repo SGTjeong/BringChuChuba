@@ -26,6 +26,7 @@
                   android:background="@drawable/alert_dialog"
                   android:id="@+id/familyName"
                   android:textColor="#fff"
+                  android:paddingHorizontal="6dp"
                   android:layout_marginHorizontal="16dp"
                   app:layout_constraintEnd_toEndOf="parent"
                   app:layout_constraintStart_toEndOf="@+id/textView"
@@ -48,7 +49,7 @@
                 android:id="@+id/linearLayout2">
 
             <Button
-                    android:id="@+id/closeSubmit"
+                    android:id="@+id/closeSubmit2"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_weight="1"
@@ -64,7 +65,7 @@
                     android:background="#fff"/>
 
             <Button
-                    android:id="@+id/sendSubmit"
+                    android:id="@+id/sendSubmit2"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_weight="1"
