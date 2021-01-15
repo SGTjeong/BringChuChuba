@@ -1,7 +1,10 @@
 package com.bring.chuchuba.viewmodel.home.buildlogic
 
+import com.bring.chuchuba.model.mission.MissionsItem
+
 sealed class HomeEvent {
     object OnLogin : HomeEvent()
+    data class OnChangeNickname(val nick: String) : HomeEvent()
 
     // familly
     data class OnCreateFamily(val familyName : String) : HomeEvent()
@@ -11,4 +14,7 @@ sealed class HomeEvent {
     object OnLoadMission : HomeEvent()
     data class OnCreateMission(val title : String, val description : String,
                                val reward : String, val expireAt : String) : HomeEvent()
+
+    data class OnCompleteMission(val mission: MissionsItem) : HomeEvent()
+
 }

@@ -5,6 +5,7 @@ data class Member(
 ){
     data class MemberGetResult(
         val familyId : String?,
+        val familyName : String?,
         val id : String?,
         val nickname : String?,
         val point : String?

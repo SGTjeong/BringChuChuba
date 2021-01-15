@@ -1,10 +1,11 @@
 package com.bring.chuchuba.model.mission
 
 import com.bring.chuchuba.adapter.base.MyItem
+import com.bring.chuchuba.model.Member
 
 data class MissionsItem(
-    val client: Client,
-    val contractor: Contractor,
+    val client: Member.MemberGetResult,
+    val contractor: Member.MemberGetResult,
     val description: String,
     val createdAt: String,
     val expireAt: String,

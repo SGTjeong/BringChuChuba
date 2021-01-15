@@ -4,11 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bring.chuchuba.MemberService
+import com.bring.chuchuba.model.ChangeNicknameRequestBody
 import com.bring.chuchuba.model.Member
 import com.bring.chuchuba.model.family.CreateFamilyRequestBody
 import com.bring.chuchuba.model.family.JoinFamilyRequestBody
 import com.bring.chuchuba.model.mission.Mission
 import com.bring.chuchuba.model.mission.MissionCreator
+import com.bring.chuchuba.model.mission.MissionsItem
 import com.bring.chuchuba.viewmodel.home.buildlogic.BaseViewModel
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeEvent
 import kotlinx.coroutines.launch
@@ -24,7 +26,8 @@ class HomeViewModel(
     private val _myInfo: MutableLiveData<Member.MemberGetResult> = MutableLiveData()
     val myInfo: LiveData<Member.MemberGetResult> get() = _myInfo
 
-    val title : MutableLiveData<String> = MutableLiveData("Welcome")
+    private val _title : MutableLiveData<String> = MutableLiveData("Welcome")
+    val title : LiveData<String> get() = _title
 
     // 미션
     private val _missionData = MutableLiveData<Mission>()
@@ -34,6 +37,7 @@ class HomeViewModel(
     private val _jobSucceedOrFail : MutableLiveData<String> = MutableLiveData()
     val jobSucceedOrFail : LiveData<String> get() = _jobSucceedOrFail
 
+
     override fun handleEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.OnLogin -> onLogin()
@@ -42,6 +46,29 @@ class HomeViewModel(
             is HomeEvent.OnLoadMission -> onLoadMission()
             is HomeEvent.OnCreateMission -> onCreateMission(event.title, event.description,
                 event.reward, event.expireAt)
+            is HomeEvent.OnChangeNickname -> onChangeNickname(event.nick)
+            is HomeEvent.OnCompleteMission -> onCompleteMission(event.mission)
+        }
+    }
+
+    private fun onCompleteMission(mission: MissionsItem) = launch{
+        try{
+            memberService.completeMission(mission.id)
+            onLoadMission()
+        }catch (e : Exception){
+            Log.e(TAG, "onCompleteMission: $e")
+        }
+    }
+
+    private fun onChangeNickname(nick: String) = launch{
+        Log.d(TAG, "HomeViewModel ~ onChangeNickname() called")
+        try{
+            memberService.changeNickName(ChangeNicknameRequestBody(nick))
+            onLogin()
+            _jobSucceedOrFail.postValue("닉네임이 \"$nick\"로 변경되었습니다")
+        }catch (e : Exception){
+            Log.e(TAG, "onChangeNickname: $e")
+            _jobSucceedOrFail.postValue("닉네임 변경 실패")
         }
     }
 
@@ -116,18 +143,17 @@ class HomeViewModel(
         }catch (e : Exception){
             Log.e(TAG, "onLogin: $e")
         }
-
     }
 
     private fun applyMyInfo(myInfo : Member.MemberGetResult){
         Log.d(TAG, "applyMyInfo : ${myInfo.id}")
         if (myInfo.familyId.isNullOrBlank()){
-            title.postValue(
-                "${myInfo.id}님 환영합니다. 방을 만드세요!"
+            _title.postValue(
+                "${myInfo.nickname ?: "새로운 참가자"}님 환영합니다. 방을 만드세요!"
             )
         } else {
-            title.postValue(
-                "${myInfo.familyId}의 ${myInfo.id}님 환영합니다"
+            _title.postValue(
+                "${myInfo.familyName}의 ${myInfo.nickname ?: "새로운 참가자"}님 환영합니다"
             )
             onLoadMission()
         }
