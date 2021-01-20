@@ -1,5 +1,6 @@
 package com.bring.chuchuba.viewmodel
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,6 +14,8 @@ import com.bring.chuchuba.model.mission.MissionCreator
 import com.bring.chuchuba.model.mission.MissionsItem
 import com.bring.chuchuba.viewmodel.home.buildlogic.BaseViewModel
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeEvent
+import com.google.firebase.dynamiclinks.ktx.*
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
@@ -37,17 +40,39 @@ class HomeViewModel(
     private val _jobSucceedOrFail : MutableLiveData<String> = MutableLiveData()
     val jobSucceedOrFail : LiveData<String> get() = _jobSucceedOrFail
 
+    // 가족
+    private val _inviteLink : MutableLiveData<String> = MutableLiveData()
+    val inviteLink : LiveData<String> get() = _inviteLink
 
     override fun handleEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.OnLogin -> onLogin()
             is HomeEvent.OnCreateFamily -> onCreateFamily(event.familyName)
             is HomeEvent.OnJoinFamily -> onJoinFamily(event.familyId)
+            is HomeEvent.OnCreateFamilyLink -> onCreateFamilyLink()
             is HomeEvent.OnLoadMission -> onLoadMission()
             is HomeEvent.OnCreateMission -> onCreateMission(event.title, event.description,
                 event.reward, event.expireAt)
             is HomeEvent.OnChangeNickname -> onChangeNickname(event.nick)
             is HomeEvent.OnCompleteMission -> onCompleteMission(event.mission)
+        }
+    }
+
+    private fun onCreateFamilyLink() = launch {
+        val shortLinkTask = Firebase.dynamicLinks.shortLinkAsync {
+            myInfo.value?.familyId?:return@shortLinkAsync
+            link = Uri.parse("https://bring.chuchuba.com/family?fKey=${myInfo.value?.familyId}")
+            domainUriPrefix = "https://bringchuchuba.page.link"
+            // Set parameters
+            // ...
+        }.addOnSuccessListener { (shortLink, flowchartLink) ->
+            // Short link created, processShortLink(shortLink, flowchartLink)
+            Log.d(TAG, "HomeViewModel ~ onCreateFamilyLink() called $shortLink")
+            _inviteLink.postValue(shortLink.toString())
+        }.addOnFailureListener {
+            Log.e(TAG, "onCreateFamilyLink: $it")
+        }.addOnCompleteListener {
+
         }
     }
 

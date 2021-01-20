@@ -13,7 +13,14 @@
         android:theme="@style/Theme.BringChuChuba"
         android:usesCleartextTraffic="true">
         <activity android:name=".view.MainActivity"
-                  android:windowSoftInputMode="adjustPan"/>
+                  android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="bring.chuchuba.com"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -52,6 +52,6 @@ interface MemberService {
 
     @PATCH("/mission/contractor/{mission_uid}")
     suspend fun contractMission(
-
-    )
+        @Path("mission_uid") mission_uid : String
+    ) : MissionsItem
 }

@@ -3,6 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable name="infoFrag" type="com.bring.chuchuba.view.MyInfoFragment"/>
+        <variable name="hvm" type="com.bring.chuchuba.viewmodel.HomeViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,8 +21,8 @@
                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                 android:id="@+id/button"/>
         <EditText android:layout_width="0dp" android:layout_height="wrap_content"
-                  android:hint="가족ID 입력(딥링크로 할 예정)"
-                  android:text="@={infoFrag.fId}"
+                  android:hint="초대 주소"
+                  android:text="@{hvm.inviteLink}"
                   android:imeOptions="actionDone"
                   android:textSize="12sp"
                   app:layout_constraintTop_toTopOf="@+id/button2"

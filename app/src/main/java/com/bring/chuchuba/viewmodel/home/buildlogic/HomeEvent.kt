@@ -9,6 +9,7 @@ sealed class HomeEvent {
     // familly
     data class OnCreateFamily(val familyName : String) : HomeEvent()
     data class OnJoinFamily(val familyId : String) : HomeEvent()
+    object OnCreateFamilyLink : HomeEvent()
 
     // mission
     object OnLoadMission : HomeEvent()
