@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             this,
             Observer { member ->
                 member ?: return@Observer
-                showToast("${member.nickname}님 환영합니다!")
+                showToast("${member.nickname ?: "새로운 참가자"}님 환영합니다!")
             }
         )
         homeViewModel.jobSucceedOrFail.observe(this) { msg ->

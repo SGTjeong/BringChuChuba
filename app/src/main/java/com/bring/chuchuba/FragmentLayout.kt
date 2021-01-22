@@ -6,4 +6,6 @@ sealed class FragmentLayout {
     object MyInfo : FragmentLayout()
     object CreateMission : FragmentLayout()
     object MissionDetailFragment : FragmentLayout()
+    object MyMissionFragment : FragmentLayout()
+    object MyMissionListFragment : FragmentLayout()
 }

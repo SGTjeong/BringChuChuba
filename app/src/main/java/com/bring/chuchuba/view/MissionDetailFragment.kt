@@ -24,7 +24,7 @@ class MissionDetailFragment(val mission: MissionsItem) : BaseFragment<FragmentMi
         return view
     }
 
-    private fun observeViewModels() {
+    override fun observeViewModels() {
 
     }
 

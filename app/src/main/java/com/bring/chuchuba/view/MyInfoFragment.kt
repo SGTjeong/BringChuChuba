@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.bring.chuchuba.BaseFragment
 import com.bring.chuchuba.FragmentLayout
+import com.bring.chuchuba.R
 import com.bring.chuchuba.databinding.FragmentMyInfoBinding
 import com.bring.chuchuba.extension.dialog.FamilyAndNickNameDialog
 import com.bring.chuchuba.showToast
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeEvent
 
 class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(FragmentLayout.MyInfo) {
+
+    private val TAG: String = "로그 ${this.javaClass.simpleName}"
 
     var myNickname : String? = null
     var myFamilyId : String? = null
@@ -38,7 +41,7 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(FragmentLayout.MyInfo
         dlg.show()
     }
 
-    private fun observeViewModels() {
+    override fun observeViewModels() {
         homeViewModel.myInfo.observe(viewLifecycleOwner){ member ->
             member ?: return@observe
             myNickname = member.nickname
@@ -70,4 +73,11 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(FragmentLayout.MyInfo
         dialog.show()
     }
 
+    fun manageMyMission(){
+        val transaction =
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, MyMissionFragment())
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
 }

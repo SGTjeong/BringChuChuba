@@ -33,9 +33,13 @@ abstract class BaseFragment<T : ViewDataBinding>(private val layoutName: Fragmen
             is FragmentLayout.Calendar -> R.layout.fragment_calendar
             is FragmentLayout.MyInfo -> R.layout.fragment_my_info
             is FragmentLayout.MissionDetailFragment -> R.layout.fragment_mission_detail
+            is FragmentLayout.MyMissionFragment -> R.layout.fragment_my_mission
+            is FragmentLayout.MyMissionListFragment -> R.layout.fragment_my_mission_list
         }
         binding = DataBindingUtil.inflate(inflater, layout, container, false)
         binding.lifecycleOwner = this
         return binding.root
     }
+
+    open fun observeViewModels(){}
 }
