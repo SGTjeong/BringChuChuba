@@ -63,6 +63,16 @@ class HomeViewModel(
             is HomeEvent.OnChangeNickname -> onChangeNickname(event.nick)
             is HomeEvent.OnCompleteMission -> onCompleteMission(event.mission)
             is HomeEvent.OnDeleteMission -> onDeleteMission(event.mission_uid)
+            is HomeEvent.OnContractMission -> onContractMission(event.mission)
+        }
+    }
+
+    private fun onContractMission(mission: MissionsItem) = launch {
+        try{
+            memberService.contractMission(mission.id)
+            onLoadMission()
+        }catch (e : Exception){
+            Log.e(TAG, "onCompleteMission: $e")
         }
     }
 

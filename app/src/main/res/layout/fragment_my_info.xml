@@ -38,9 +38,8 @@
                 android:text="닉네임 변경"
                 android:layout_marginHorizontal="16dp"
                 android:onClick="@{() -> infoFrag.changeNickname()}"
-                app:layout_constraintTop_toBottomOf="@+id/button2"
                 app:layout_constraintEnd_toEndOf="parent" android:id="@+id/button3"
-                app:layout_constraintStart_toEndOf="@+id/button4" app:layout_constraintHorizontal_bias="0.5"/>
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
         <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="내 미션 관리"
                 android:layout_marginHorizontal="16dp"
@@ -48,6 +47,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/button2"
                 android:id="@+id/button4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/button3"/>
+                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/button5"/>
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="진행중인 미션"
+                android:layout_marginHorizontal="16dp"
+                android:onClick="@{() -> infoFrag.contractMyMission()}"
+                android:id="@+id/button5"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@+id/button2"
+                app:layout_constraintStart_toEndOf="@+id/button4" app:layout_constraintHorizontal_bias="0.5"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

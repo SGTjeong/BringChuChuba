@@ -18,5 +18,5 @@ sealed class HomeEvent {
                                val reward : String, val expireAt : String) : HomeEvent()
 
     data class OnCompleteMission(val mission: MissionsItem) : HomeEvent()
-
+    data class OnContractMission(val mission: MissionsItem) : HomeEvent()
 }

@@ -9,7 +9,7 @@ import com.bring.chuchuba.FragmentLayout
 import com.bring.chuchuba.R
 import com.bring.chuchuba.databinding.FragmentMyInfoBinding
 import com.bring.chuchuba.extension.dialog.FamilyAndNickNameDialog
-import com.bring.chuchuba.showToast
+import com.bring.chuchuba.extension.showToast
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeEvent
 
 class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(FragmentLayout.MyInfo) {
@@ -76,7 +76,15 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(FragmentLayout.MyInfo
     fun manageMyMission(){
         val transaction =
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, MyMissionFragment())
+                .replace(R.id.fragment_container, MyMissionFragment(0))
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    fun contractMyMission(){
+        val transaction =
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, MyMissionFragment(1))
         transaction.addToBackStack(null)
         transaction.commit()
     }

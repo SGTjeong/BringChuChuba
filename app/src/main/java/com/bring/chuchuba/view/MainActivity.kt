@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bring.chuchuba.*
 import com.bring.chuchuba.adapter.CustomFragmentAdapter
 import com.bring.chuchuba.databinding.ActivityMainBinding
+import com.bring.chuchuba.extension.showToast
 import com.bring.chuchuba.viewmodel.HomeViewModel
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeEvent
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeInjector

@@ -1,7 +1,6 @@
 package com.bring.chuchuba.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +12,12 @@ import com.bring.chuchuba.adapter.mission.MissionListAdapter
 import com.bring.chuchuba.databinding.FragmentMyMissionListBinding
 import com.bring.chuchuba.model.mission.MissionsItem
 
-class MyMissionListFragment(private val status: Int) :
+class MyMissionListFragment(private val status: Int, private val missionType: Int) :
     BaseFragment<FragmentMyMissionListBinding>(FragmentLayout.MyMissionListFragment) {
 
     private val TAG: String = "로그 ${this.javaClass.simpleName}"
     private lateinit var adapter: MissionListAdapter
-
+    private var myId: String? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,14 +30,21 @@ class MyMissionListFragment(private val status: Int) :
     }
 
     override fun observeViewModels() {
+        myId = homeViewModel.myInfo.value?.id
         homeViewModel.missionData.observe(viewLifecycleOwner) { missionList ->
             missionList ?: return@observe
-            Log.d(TAG, "MyMissionListFragment ~ observeViewModels() called $missionList")
-            when (status) {
-                0 -> adapter.submitList(missionList.filter { it.status == "todo" })
-                1 -> adapter.submitList(missionList.filter { it.status == "inProgress" })
-                else -> adapter.submitList(missionList.filter { it.status == "complete" })
-            }
+            myId ?: return@observe
+            if (missionType == 0)
+                when (status) {
+                    0 -> adapter.submitList(missionList.filter { it.client.id == myId && it.status == "todo" })
+                    1 -> adapter.submitList(missionList.filter { it.client.id == myId && it.status == "inProgress" })
+                    else -> adapter.submitList(missionList.filter { it.client.id == myId && it.status == "complete" })
+                }
+            else
+                when (status) {
+                    1 -> adapter.submitList(missionList.filter { it.contractor?.id == myId && it.status == "inProgress" })
+                    else -> adapter.submitList(missionList.filter { it.contractor?.id == myId && it.status == "complete" })
+                }
         }
     }
 

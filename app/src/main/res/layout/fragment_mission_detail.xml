@@ -70,9 +70,10 @@
                     android:text="@{mdFrag.mission.description}"
                     android:padding="8dp"
                     app:layout_constraintHorizontal_bias="0.1"
-                    android:layout_marginVertical="50dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginHorizontal="16dp"
                     android:background="@drawable/mission_item_stroke"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="미션 내용" android:id="@+id/detail_mission_description"
                     app:layout_constraintTop_toBottomOf="@+id/detail_mission_reward"
@@ -84,6 +85,16 @@
                     android:onClick="@{()->mdFrag.completeMission()}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_mission_description" android:id="@+id/completeMissionButton"/>
+
+            <Button android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="제가 할게요"
+                    android:layout_marginEnd="10dp"
+                    android:id="@+id/contractMissionButton"
+                    android:onClick="@{()->mdFrag.contractMission()}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/completeMissionButton"
                     app:layout_constraintTop_toBottomOf="@+id/detail_mission_description"/>
 
 
