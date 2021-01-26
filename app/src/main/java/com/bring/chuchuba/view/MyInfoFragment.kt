@@ -1,6 +1,8 @@
 package com.bring.chuchuba.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +48,13 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(FragmentLayout.MyInfo
             member ?: return@observe
             myNickname = member.nickname
             myFamilyId = member.familyId
+        }
+        homeViewModel.inviteLink.observe(viewLifecycleOwner){ link->
+            Log.d(TAG, "observeViewModels() called $link")
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT,  link)
+            startActivity(Intent.createChooser(intent, "가족 초대 코드"))
         }
     }
 

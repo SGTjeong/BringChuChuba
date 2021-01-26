@@ -89,7 +89,7 @@ class HomeViewModel(
             // ...
         }.addOnSuccessListener { (shortLink, flowchartLink) ->
             // Short link created, processShortLink(shortLink, flowchartLink)
-            Log.d(TAG, "HomeViewModel ~ onCreateFamilyLink() called $shortLink")
+            Log.d(TAG, "onCreateFamilyLink() called $shortLink")
             _inviteLink.postValue(shortLink.toString())
         }.addOnFailureListener {
             Log.e(TAG, "onCreateFamilyLink: $it")
