@@ -41,7 +41,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentLayout.Home) {
     }
 
 
-    private fun observeViewModels() {
+    override fun observeViewModels() {
         homeViewModel.myInfo.observe(
             viewLifecycleOwner,
             Observer { member ->

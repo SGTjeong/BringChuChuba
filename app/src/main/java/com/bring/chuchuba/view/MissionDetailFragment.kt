@@ -18,13 +18,22 @@ class MissionDetailFragment(val mission: MissionsItem) : BaseFragment<FragmentMi
         savedInstanceState: Bundle?
     ): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
-
         binding.mdFrag = this
         observeViewModels()
+        restrictButton()
         return view
     }
 
-    private fun observeViewModels() {
+    private fun restrictButton() {
+        val myId = homeViewModel.myInfo.value?.id
+        if (mission.client.id == myId)
+            binding.contractMissionButton.visibility = View.GONE
+        else
+            binding.completeMissionButton.visibility = View.GONE
+    }
+
+    override fun observeViewModels() {
+
 
     }
 
@@ -33,7 +42,7 @@ class MissionDetailFragment(val mission: MissionsItem) : BaseFragment<FragmentMi
     }
 
     fun contractMission(){
-
+        homeViewModel.handleEvent(HomeEvent.OnContractMission(mission))
     }
 
 }

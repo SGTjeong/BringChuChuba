@@ -3,6 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable name="infoFrag" type="com.bring.chuchuba.view.MyInfoFragment"/>
+        <variable name="hvm" type="com.bring.chuchuba.viewmodel.HomeViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,8 +21,8 @@
                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
                 android:id="@+id/button"/>
         <EditText android:layout_width="0dp" android:layout_height="wrap_content"
-                  android:hint="가족ID 입력(딥링크로 할 예정)"
-                  android:text="@={infoFrag.fId}"
+                  android:hint="초대 주소"
+                  android:text="@{hvm.inviteLink}"
                   android:imeOptions="actionDone"
                   android:textSize="12sp"
                   app:layout_constraintTop_toTopOf="@+id/button2"
@@ -37,7 +38,22 @@
                 android:text="닉네임 변경"
                 android:layout_marginHorizontal="16dp"
                 android:onClick="@{() -> infoFrag.changeNickname()}"
+                app:layout_constraintEnd_toEndOf="parent" android:id="@+id/button3"
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"/>
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="내 미션 관리"
+                android:layout_marginHorizontal="16dp"
+                android:onClick="@{() -> infoFrag.manageMyMission()}"
                 app:layout_constraintTop_toBottomOf="@+id/button2"
-                app:layout_constraintEnd_toEndOf="parent" android:id="@+id/button3"/>
+                android:id="@+id/button4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/button5"/>
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="진행중인 미션"
+                android:layout_marginHorizontal="16dp"
+                android:onClick="@{() -> infoFrag.contractMyMission()}"
+                android:id="@+id/button5"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@+id/button2"
+                app:layout_constraintStart_toEndOf="@+id/button4" app:layout_constraintHorizontal_bias="0.5"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

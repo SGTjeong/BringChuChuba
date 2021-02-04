@@ -1,20 +1,25 @@
 package com.bring.chuchuba.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bring.chuchuba.BaseFragment
 import com.bring.chuchuba.FragmentLayout
+import com.bring.chuchuba.R
 import com.bring.chuchuba.databinding.FragmentMyInfoBinding
 import com.bring.chuchuba.extension.dialog.FamilyAndNickNameDialog
-import com.bring.chuchuba.showToast
+import com.bring.chuchuba.extension.showToast
 import com.bring.chuchuba.viewmodel.home.buildlogic.HomeEvent
 
 class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(FragmentLayout.MyInfo) {
 
-    var fId : String = ""
+    private val TAG: String = "로그 ${this.javaClass.simpleName}"
+
     var myNickname : String? = null
+    var myFamilyId : String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,6 +27,7 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(FragmentLayout.MyInfo
     ): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
         binding.infoFrag = this
+        binding.hvm = homeViewModel
         observeViewModels()
         return view
     }
@@ -37,25 +43,31 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(FragmentLayout.MyInfo
         dlg.show()
     }
 
-    private fun observeViewModels() {
+    override fun observeViewModels() {
         homeViewModel.myInfo.observe(viewLifecycleOwner){ member ->
-            member.nickname ?: return@observe
+            member ?: return@observe
             myNickname = member.nickname
+            myFamilyId = member.familyId
+        }
+        homeViewModel.inviteLink.observe(viewLifecycleOwner){ link->
+            Log.d(TAG, "observeViewModels() called $link")
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT,  link)
+            startActivity(Intent.createChooser(intent, "가족 초대 코드"))
         }
     }
 
     /**
-     * 가족 아이디로 조인하는 함수. 딥링크로 호출? 예정
+     * 딥링크 만들기
+     * 가족을 실수로 만든 상태여도 JoinFamily를 호출하면 ->
+     * 가족을 삭제하고 참여할지, 선택하는 창을 만들면 좋을듯
      */
     fun joinFamily(){
-        if (fId != ""){
-            homeViewModel.handleEvent(HomeEvent.OnJoinFamily(fId))
-//            { response ->
-//                if (response == "") this.showToast("가족 입장 실패!")
-//                else this.showToast("\"${response}\"방에 입장했습니다!")
-//            })
+        if (myFamilyId!=null){
+            homeViewModel.handleEvent(HomeEvent.OnCreateFamilyLink)
         } else {
-            this.showToast("check!")
+            this.showToast("먼저 가족을 만드세요")
         }
     }
 
@@ -70,4 +82,19 @@ class MyInfoFragment : BaseFragment<FragmentMyInfoBinding>(FragmentLayout.MyInfo
         dialog.show()
     }
 
+    fun manageMyMission(){
+        val transaction =
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, MyMissionFragment(0))
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    fun contractMyMission(){
+        val transaction =
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, MyMissionFragment(1))
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
 }

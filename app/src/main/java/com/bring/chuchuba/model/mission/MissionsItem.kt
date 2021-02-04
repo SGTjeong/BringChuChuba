@@ -5,7 +5,7 @@ import com.bring.chuchuba.model.Member
 
 data class MissionsItem(
     val client: Member.MemberGetResult,
-    val contractor: Member.MemberGetResult,
+    val contractor: Member.MemberGetResult?,
     val description: String,
     val createdAt: String,
     val expireAt: String,
